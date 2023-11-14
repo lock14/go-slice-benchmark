@@ -1,4 +1,9 @@
+## Plot Results
+![plot of slice of pointer vs slice on concrete](./points.png "Slice of Pointer vs Concrete Type")
+
+## Text Results
 ```
+$ cd benchmark
 $ go test -benchmem -bench ./...
 goos: linux
 goarch: amd64

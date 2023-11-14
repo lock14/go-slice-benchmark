@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"reflect"
 	"testing"
 
 	"gonum.org/v1/plot"
@@ -9,73 +11,133 @@ import (
 	"gonum.org/v1/plot/vg"
 )
 
-func runInline[T any](size int) func(*testing.B) {
+func inline_slice[T Small | Medium | Large | ExtraLarge](sliceSize int) func(*testing.B) {
 	return func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			a := make([]T, 0, size)
-			for i := 0; i < size; i++ {
+			a := make([]T, 0, sliceSize)
+			for j := 0; j < sliceSize; j++ {
 				var t T
 				a = append(a, t)
 			}
 		}
 	}
 }
-
-func runPointer[T any](size int) func(b *testing.B) {
+func pointer_slice[T Small | Medium | Large | ExtraLarge](sliceSize int) func(b *testing.B) {
 	return func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
-			a := make([]*T, 0, size)
-			for i := 0; i < size; i++ {
+			a := make([]*T, 0, sliceSize)
+			for j := 0; j < sliceSize; j++ {
 				a = append(a, new(T))
 			}
 		}
 	}
 }
 
+func inlineSliceBenchmarkCases[T Small | Medium | Large | ExtraLarge]() []BenchmarkCase {
+	var t T
+	typename := reflect.TypeOf(t).Name()
+	cases := make([]BenchmarkCase, 0, 12)
+	for i := 10; i <= 1000000; i *= 10 {
+		cases = append(cases, BenchmarkCase{
+			name:          fmt.Sprintf("%s_inline_slice_%d_elements", typename, i),
+			xAxis:         i,
+			benchMarkFunc: inline_slice[T](i),
+		})
+	}
+	return cases
+}
+
+func pointerSliceBenchmarkCases[T Small | Medium | Large | ExtraLarge]() []BenchmarkCase {
+	var t T
+	typename := reflect.TypeOf(t).Name()
+	cases := make([]BenchmarkCase, 0, 12)
+	for i := 10; i <= 1000000; i *= 10 {
+		cases = append(cases, BenchmarkCase{
+			name:          fmt.Sprintf("%s_pointer_slice_%d_elements", typename, i),
+			xAxis:         i,
+			benchMarkFunc: pointer_slice[T](i),
+		})
+	}
+	return cases
+}
+
+type BenchmarkCase struct {
+	name          string
+	xAxis         int
+	benchMarkFunc func(*testing.B)
+}
+
+type PlotBenchMark struct {
+	plotName string
+	plotXYs  plotter.XYs
+	cases    []BenchmarkCase
+}
+
 func main() {
 	p := plot.New()
-	p.Title.Text = "Array of Pointer vs Concrete Type"
-	p.X.Label.Text = "Size Of Array"
+	p.Title.Text = "Slice of Pointer vs Concrete Type"
+	p.X.Label.Text = "Slice Size"
 	p.X.Scale = plot.LogScale{}
 	p.X.Tick.Marker = plot.LogTicks{}
 	p.Y.Label.Text = "Ns/Op"
 	p.Y.Scale = plot.LogScale{}
 	p.Y.Tick.Marker = plot.LogTicks{}
 
-	smllConcrete := plotter.XYs{}
-	smllPointer := plotter.XYs{}
-	medConcrete := plotter.XYs{}
-	medPointer := plotter.XYs{}
-	lrgConcrete := plotter.XYs{}
-	lrgPointer := plotter.XYs{}
-	xlrgConcrete := plotter.XYs{}
-	xlrgPointer := plotter.XYs{}
-
-	for i := 1; i <= 1_000_000; i = i * 10 {
-		result := testing.Benchmark(runInline[Small](i))
-		smllConcrete = append(smllConcrete, plotter.XY{float64(i), float64(result.NsPerOp())})
-		result = testing.Benchmark(runPointer[Small](i))
-		smllPointer = append(smllPointer, plotter.XY{float64(i), float64(result.NsPerOp())})
-		result = testing.Benchmark(runInline[Medium](i))
-		medConcrete = append(medConcrete, plotter.XY{float64(i), float64(result.NsPerOp())})
-		result = testing.Benchmark(runPointer[Medium](i))
-		medPointer = append(medPointer, plotter.XY{float64(i), float64(result.NsPerOp())})
-		result = testing.Benchmark(runInline[Large](i))
-		lrgConcrete = append(lrgConcrete, plotter.XY{float64(i), float64(result.NsPerOp())})
-		result = testing.Benchmark(runPointer[Large](i))
-		lrgPointer = append(lrgPointer, plotter.XY{float64(i), float64(result.NsPerOp())})
-		result = testing.Benchmark(runInline[ExtraLarge](i))
-		xlrgConcrete = append(xlrgConcrete, plotter.XY{float64(i), float64(result.NsPerOp())})
-		result = testing.Benchmark(runPointer[ExtraLarge](i))
-		xlrgPointer = append(xlrgPointer, plotter.XY{float64(i), float64(result.NsPerOp())})
+	plotBenchMarks := []PlotBenchMark{
+		{
+			plotName: "small inline",
+			plotXYs:  plotter.XYs{},
+			cases:    inlineSliceBenchmarkCases[Small](),
+		},
+		{
+			plotName: "small pointer",
+			plotXYs:  plotter.XYs{},
+			cases:    pointerSliceBenchmarkCases[Small](),
+		},
+		{
+			plotName: "medium inline",
+			plotXYs:  plotter.XYs{},
+			cases:    inlineSliceBenchmarkCases[Medium](),
+		},
+		{
+			plotName: "medium pointer",
+			plotXYs:  plotter.XYs{},
+			cases:    pointerSliceBenchmarkCases[Medium](),
+		},
+		{
+			plotName: "large inline",
+			plotXYs:  plotter.XYs{},
+			cases:    inlineSliceBenchmarkCases[Large](),
+		},
+		{
+			plotName: "large pointer",
+			plotXYs:  plotter.XYs{},
+			cases:    pointerSliceBenchmarkCases[Large](),
+		},
+		{
+			plotName: "x-large inline",
+			plotXYs:  plotter.XYs{},
+			cases:    inlineSliceBenchmarkCases[ExtraLarge](),
+		},
+		{
+			plotName: "x-large pointer",
+			plotXYs:  plotter.XYs{},
+			cases:    pointerSliceBenchmarkCases[ExtraLarge](),
+		},
 	}
-	err := plotutil.AddLinePoints(p,
-		"medium inline", medConcrete,
-		"medium pointer", medPointer,
-		"large inline", lrgConcrete,
-		"large pointer", lrgPointer,
-		"x-large inline", xlrgConcrete,
-		"x-large pointer", xlrgPointer)
+	a := make([]interface{}, 0)
+	for _, plotBenchMark := range plotBenchMarks {
+		for _, benchMarkCase := range plotBenchMark.cases {
+			result := testing.Benchmark(benchMarkCase.benchMarkFunc)
+			plotBenchMark.plotXYs = append(plotBenchMark.plotXYs, plotter.XY{
+				X: float64(benchMarkCase.xAxis),
+				Y: float64(result.NsPerOp()),
+			})
+		}
+		a = append(a, plotBenchMark.plotName)
+		a = append(a, plotBenchMark.plotXYs)
+	}
+	err := plotutil.AddLinePoints(p, a...)
 	if err != nil {
 		panic(err)
 	}
