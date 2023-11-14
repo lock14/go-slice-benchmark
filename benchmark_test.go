@@ -11,7 +11,7 @@ func inline_slice[T Small | Medium | Large | ExtraLarge](sliceSize int) func(*te
 	return func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			a := make([]T, 0, sliceSize)
-			for i := 0; i < sliceSize; i++ {
+			for j := 0; j < sliceSize; j++ {
 				var t T
 				a = append(a, t)
 			}
@@ -22,7 +22,7 @@ func pointer_slice[T Small | Medium | Large | ExtraLarge](sliceSize int) func(b 
 	return func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			a := make([]*T, 0, sliceSize)
-			for i := 0; i < sliceSize; i++ {
+			for j := 0; j < sliceSize; j++ {
 				a = append(a, new(T))
 			}
 		}
