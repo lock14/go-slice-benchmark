@@ -26,8 +26,7 @@ func runPointer[T any](size int) func(b *testing.B) {
 		for i := 0; i < b.N; i++ {
 			a := make([]*T, 0, size)
 			for i := 0; i < size; i++ {
-				var t T
-				a = append(a, &t)
+				a = append(a, new(T))
 			}
 		}
 	}
@@ -43,6 +42,8 @@ func main() {
 	p.Y.Scale = plot.LogScale{}
 	p.Y.Tick.Marker = plot.LogTicks{}
 
+	smllConcrete := plotter.XYs{}
+	smllPointer := plotter.XYs{}
 	medConcrete := plotter.XYs{}
 	medPointer := plotter.XYs{}
 	lrgConcrete := plotter.XYs{}
@@ -51,7 +52,11 @@ func main() {
 	xlrgPointer := plotter.XYs{}
 
 	for i := 1; i <= 1_000_000; i = i * 10 {
-		result := testing.Benchmark(runInline[Medium](i))
+		result := testing.Benchmark(runInline[Small](i))
+		smllConcrete = append(smllConcrete, plotter.XY{float64(i), float64(result.NsPerOp())})
+		result = testing.Benchmark(runPointer[Small](i))
+		smllPointer = append(smllPointer, plotter.XY{float64(i), float64(result.NsPerOp())})
+		result = testing.Benchmark(runInline[Medium](i))
 		medConcrete = append(medConcrete, plotter.XY{float64(i), float64(result.NsPerOp())})
 		result = testing.Benchmark(runPointer[Medium](i))
 		medPointer = append(medPointer, plotter.XY{float64(i), float64(result.NsPerOp())})

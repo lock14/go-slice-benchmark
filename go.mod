@@ -1,6 +1,6 @@
 module github.com/lock14/go-slice-benchmark
 
-go 1.22
+go 1.21
 
 require gonum.org/v1/plot v0.14.0
 
