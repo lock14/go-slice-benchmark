@@ -1,57 +1,57 @@
 ```
 $ go test -benchmem -bench ./...
-goos: linux 
+goos: linux
 goarch: amd64
-pkg: main/benchmark
-cpu: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz
-BenchmarkSlice/small_inline_slice_10_elements-8                   47252882             25.30 ns/op              80 B/op          1 allocs/op
-BenchmarkSlice/small_pointer_slice_10_elements-8                   8427344             135.3 ns/op             160 B/op         11 allocs/op
-BenchmarkSlice/medium_inline_slice_10_elements-8                  10051024             119.1 ns/op             896 B/op          1 allocs/op
-BenchmarkSlice/medium_pointer_slice_10_elements-8                  4317172             325.6 ns/op             880 B/op         11 allocs/op
-BenchmarkSlice/large_inline_slice_10_elements-8                     764784              1816 ns/op            8192 B/op          1 allocs/op
-BenchmarkSlice/large_pointer_slice_10_elements-8                    457407              2423 ns/op            9040 B/op         11 allocs/op
-BenchmarkSlice/extra_large_inline_slice_10_elements-8                77670             16228 ns/op           81920 B/op          1 allocs/op
-BenchmarkSlice/extra_large_pointer_slice_10_elements-8               59167             19744 ns/op           82000 B/op         11 allocs/op
-BenchmarkSlice/small_inline_slice_100_elements-8                   3914026             302.6 ns/op             896 B/op          1 allocs/op
-BenchmarkSlice/small_pointer_slice_100_elements-8                   444705              2260 ns/op            1696 B/op        101 allocs/op
-BenchmarkSlice/medium_inline_slice_100_elements-8                   564949              2069 ns/op            8192 B/op          1 allocs/op
-BenchmarkSlice/medium_pointer_slice_100_elements-8                  257494              4488 ns/op            8896 B/op        101 allocs/op
-BenchmarkSlice/large_inline_slice_100_elements-8                     95446             13682 ns/op           81920 B/op          1 allocs/op
-BenchmarkSlice/large_pointer_slice_100_elements-8                    52207             21655 ns/op           90496 B/op        101 allocs/op
-BenchmarkSlice/extra_large_inline_slice_100_elements-8                8936            140822 ns/op          802819 B/op          1 allocs/op
-BenchmarkSlice/extra_large_pointer_slice_100_elements-8               5331            193365 ns/op          820100 B/op        101 allocs/op
-BenchmarkSlice/small_inline_slice_1000_elements-8                   430786              2397 ns/op            8192 B/op          1 allocs/op
-BenchmarkSlice/small_pointer_slice_1000_elements-8                   54160             20524 ns/op           16192 B/op       1001 allocs/op
-BenchmarkSlice/medium_inline_slice_1000_elements-8                   71592             18534 ns/op           81920 B/op          1 allocs/op
-BenchmarkSlice/medium_pointer_slice_1000_elements-8                  25383             42482 ns/op           88192 B/op       1001 allocs/op
-BenchmarkSlice/large_inline_slice_1000_elements-8                     9700            124089 ns/op          802819 B/op          1 allocs/op
-BenchmarkSlice/large_pointer_slice_1000_elements-8                    4358            249309 ns/op          904194 B/op       1001 allocs/op
-BenchmarkSlice/extra_large_inline_slice_1000_elements-8               1081           1126305 ns/op         8003587 B/op          1 allocs/op
-BenchmarkSlice/extra_large_pointer_slice_1000_elements-8               387           3293187 ns/op         8200201 B/op       1001 allocs/op
-BenchmarkSlice/small_inline_slice_10000_elements-8                   51033             22304 ns/op           81920 B/op          1 allocs/op
-BenchmarkSlice/small_pointer_slice_10000_elements-8                   4742            217997 ns/op          161920 B/op      10001 allocs/op
-BenchmarkSlice/medium_inline_slice_10000_elements-8                   6373            283674 ns/op          802820 B/op          1 allocs/op
-BenchmarkSlice/medium_pointer_slice_10000_elements-8                  2152            506319 ns/op          881921 B/op      10001 allocs/op
-BenchmarkSlice/large_inline_slice_10000_elements-8                     710           1555243 ns/op         8003601 B/op          1 allocs/op
-BenchmarkSlice/large_pointer_slice_10000_elements-8                    298           4110125 ns/op         9041927 B/op      10001 allocs/op
-BenchmarkSlice/extra_large_inline_slice_10000_elements-8               116           9806305 ns/op        80003086 B/op          1 allocs/op
-BenchmarkSlice/extra_large_pointer_slice_10000_elements-8               56          24319194 ns/op        82001920 B/op      10001 allocs/op
-BenchmarkSlice/small_inline_slice_100000_elements-8                   6555            185899 ns/op          802823 B/op          1 allocs/op
-BenchmarkSlice/small_pointer_slice_100000_elements-8                   416           2593094 ns/op         1602825 B/op     100001 allocs/op
-BenchmarkSlice/medium_inline_slice_100000_elements-8                   625           2070135 ns/op         8003599 B/op          1 allocs/op
-BenchmarkSlice/medium_pointer_slice_100000_elements-8                  176           6411874 ns/op         8802817 B/op     100001 allocs/op
-BenchmarkSlice/large_inline_slice_100000_elements-8                     93          13473197 ns/op        80003088 B/op          1 allocs/op
-BenchmarkSlice/large_pointer_slice_100000_elements-8                    38          27358065 ns/op        90402828 B/op     100001 allocs/op
-BenchmarkSlice/extra_large_inline_slice_100000_elements-8               13          85183124 ns/op       800006151 B/op          1 allocs/op
-BenchmarkSlice/extra_large_pointer_slice_100000_elements-8               6         194797194 ns/op       820002816 B/op     100001 allocs/op
-BenchmarkSlice/small_inline_slice_1000000_elements-8                   859           1471497 ns/op         8003588 B/op          1 allocs/op
-BenchmarkSlice/small_pointer_slice_1000000_elements-8                   56          25958045 ns/op        16003606 B/op    1000001 allocs/op
-BenchmarkSlice/medium_inline_slice_1000000_elements-8                   58          18492885 ns/op        80003078 B/op          1 allocs/op
-BenchmarkSlice/medium_pointer_slice_1000000_elements-8                  19          56913227 ns/op        88003584 B/op    1000001 allocs/op
-BenchmarkSlice/large_inline_slice_1000000_elements-8                     9         127597741 ns/op       800006154 B/op          1 allocs/op
-BenchmarkSlice/large_pointer_slice_1000000_elements-8                    4         272081173 ns/op       904003608 B/op    1000001 allocs/op
-BenchmarkSlice/extra_large_inline_slice_1000000_elements-8               1        2646295183 ns/op      8000004096 B/op          1 allocs/op
-BenchmarkSlice/extra_large_pointer_slice_1000000_elements-8              1        1621876718 ns/op      8200003680 B/op    1000002 allocs/op
+pkg: github.com/lock14/go-slice-benchmark
+cpu: Intel(R) Xeon(R) W-2135 CPU @ 3.70GHz
+BenchmarkSlice/Small_inline_slice_10_elements-12         	17634830	        68.42 ns/op	      80 B/op	       1 allocs/op
+BenchmarkSlice/Small_pointer_slice_10_elements-12        	 3117170	       366.1 ns/op	     160 B/op	      11 allocs/op
+BenchmarkSlice/Small_inline_slice_100_elements-12        	 3189034	       368.2 ns/op	     896 B/op	       1 allocs/op
+BenchmarkSlice/Small_pointer_slice_100_elements-12       	  382812	      3214 ns/op	    1696 B/op	     101 allocs/op
+BenchmarkSlice/Small_inline_slice_1000_elements-12       	  276752	      3790 ns/op	    8192 B/op	       1 allocs/op
+BenchmarkSlice/Small_pointer_slice_1000_elements-12      	   36691	     31753 ns/op	   16192 B/op	    1001 allocs/op
+BenchmarkSlice/Small_inline_slice_10000_elements-12      	   44324	     28266 ns/op	   81920 B/op	       1 allocs/op
+BenchmarkSlice/Small_pointer_slice_10000_elements-12     	    3559	    284725 ns/op	  161920 B/op	   10001 allocs/op
+BenchmarkSlice/Small_inline_slice_100000_elements-12     	    4950	    262121 ns/op	  802825 B/op	       1 allocs/op
+BenchmarkSlice/Small_pointer_slice_100000_elements-12    	     345	   3292657 ns/op	 1602826 B/op	  100001 allocs/op
+BenchmarkSlice/Small_inline_slice_1000000_elements-12    	     524	   2225758 ns/op	 8003587 B/op	       1 allocs/op
+BenchmarkSlice/Small_pointer_slice_1000000_elements-12   	      45	  24279759 ns/op	16003599 B/op	 1000001 allocs/op
+BenchmarkSlice/Medium_inline_slice_10_elements-12        	 3085176	       396.1 ns/op	     896 B/op	       1 allocs/op
+BenchmarkSlice/Medium_pointer_slice_10_elements-12       	 1474717	       782.8 ns/op	     880 B/op	      11 allocs/op
+BenchmarkSlice/Medium_inline_slice_100_elements-12       	  285411	      3920 ns/op	    8192 B/op	       1 allocs/op
+BenchmarkSlice/Medium_pointer_slice_100_elements-12      	  163668	      6779 ns/op	    8896 B/op	     101 allocs/op
+BenchmarkSlice/Medium_inline_slice_1000_elements-12      	   33260	     36157 ns/op	   81920 B/op	       1 allocs/op
+BenchmarkSlice/Medium_pointer_slice_1000_elements-12     	   18082	     67389 ns/op	   88192 B/op	    1001 allocs/op
+BenchmarkSlice/Medium_inline_slice_10000_elements-12     	    3440	    317145 ns/op	  802824 B/op	       1 allocs/op
+BenchmarkSlice/Medium_pointer_slice_10000_elements-12    	    1640	    694422 ns/op	  881922 B/op	   10001 allocs/op
+BenchmarkSlice/Medium_inline_slice_100000_elements-12    	     414	   2611110 ns/op	 8003601 B/op	       1 allocs/op
+BenchmarkSlice/Medium_pointer_slice_100000_elements-12   	     128	   9423877 ns/op	 8802827 B/op	  100001 allocs/op
+BenchmarkSlice/Medium_inline_slice_1000000_elements-12   	      73	  16265265 ns/op	80003078 B/op	       1 allocs/op
+BenchmarkSlice/Medium_pointer_slice_1000000_elements-12  	      24	  51886459 ns/op	88003673 B/op	 1000001 allocs/op
+BenchmarkSlice/Large_inline_slice_10_elements-12         	  386858	      3372 ns/op	    8192 B/op	       1 allocs/op
+BenchmarkSlice/Large_pointer_slice_10_elements-12        	  335685	      3175 ns/op	    9040 B/op	      11 allocs/op
+BenchmarkSlice/Large_inline_slice_100_elements-12        	   45427	     25257 ns/op	   81920 B/op	       1 allocs/op
+BenchmarkSlice/Large_pointer_slice_100_elements-12       	   40512	     30624 ns/op	   90496 B/op	     101 allocs/op
+BenchmarkSlice/Large_inline_slice_1000_elements-12       	    5011	    231234 ns/op	  802819 B/op	       1 allocs/op
+BenchmarkSlice/Large_pointer_slice_1000_elements-12      	    3183	    348893 ns/op	  904194 B/op	    1001 allocs/op
+BenchmarkSlice/Large_inline_slice_10000_elements-12      	     590	   2153888 ns/op	 8003602 B/op	       1 allocs/op
+BenchmarkSlice/Large_pointer_slice_10000_elements-12     	     222	   5340563 ns/op	 9041937 B/op	   10001 allocs/op
+BenchmarkSlice/Large_inline_slice_100000_elements-12     	      90	  13447315 ns/op	80003090 B/op	       1 allocs/op
+BenchmarkSlice/Large_pointer_slice_100000_elements-12    	      39	  31407895 ns/op	90402833 B/op	  100001 allocs/op
+BenchmarkSlice/Large_inline_slice_1000000_elements-12    	      10	 101270908 ns/op	800006144 B/op	       1 allocs/op
+BenchmarkSlice/Large_pointer_slice_1000000_elements-12   	       6	 207495868 ns/op	904003616 B/op	 1000001 allocs/op
+BenchmarkSlice/ExtraLarge_inline_slice_10_elements-12    	   52473	     24751 ns/op	   81920 B/op	       1 allocs/op
+BenchmarkSlice/ExtraLarge_pointer_slice_10_elements-12   	   46599	     29918 ns/op	   82000 B/op	      11 allocs/op
+BenchmarkSlice/ExtraLarge_inline_slice_100_elements-12   	    6196	    165310 ns/op	  802819 B/op	       1 allocs/op
+BenchmarkSlice/ExtraLarge_pointer_slice_100_elements-12  	    4149	    245199 ns/op	  820100 B/op	     101 allocs/op
+BenchmarkSlice/ExtraLarge_inline_slice_1000_elements-12  	     933	   1407656 ns/op	 8003589 B/op	       1 allocs/op
+BenchmarkSlice/ExtraLarge_pointer_slice_1000_elements-12 	     271	   4285251 ns/op	 8200210 B/op	    1001 allocs/op
+BenchmarkSlice/ExtraLarge_inline_slice_10000_elements-12 	     100	  12002116 ns/op	80003080 B/op	       1 allocs/op
+BenchmarkSlice/ExtraLarge_pointer_slice_10000_elements-12         	      50	  24341043 ns/op	82001946 B/op	   10001 allocs/op
+BenchmarkSlice/ExtraLarge_inline_slice_100000_elements-12         	      12	  85325388 ns/op	800006144 B/op	       1 allocs/op
+BenchmarkSlice/ExtraLarge_pointer_slice_100000_elements-12        	       6	 186596768 ns/op	820002864 B/op	  100001 allocs/op
+BenchmarkSlice/ExtraLarge_inline_slice_1000000_elements-12        	       1	1643117000 ns/op	8000004096 B/op	       1 allocs/op
+BenchmarkSlice/ExtraLarge_pointer_slice_1000000_elements-12       	       1	1585078405 ns/op	8200003688 B/op	 1000003 allocs/op
 PASS
-ok      main/benchmark  74.534s
+ok  	github.com/lock14/go-slice-benchmark	76.041s
 ```
