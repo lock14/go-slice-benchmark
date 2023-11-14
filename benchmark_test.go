@@ -43,6 +43,8 @@ func sliceBenchmarkCases[T Small | Medium | Large | ExtraLarge]() []BenchmarkCas
 			name:          fmt.Sprintf("%s_inline_slice_%d_elements", typename, i),
 			benchMarkFunc: inline_slice[T](i),
 		})
+	}
+	for i := 10; i <= 1000000; i *= 10 {
 		cases = append(cases, BenchmarkCase{
 			name:          fmt.Sprintf("%s_pointer_slice_%d_elements", typename, i),
 			benchMarkFunc: pointer_slice[T](i),
